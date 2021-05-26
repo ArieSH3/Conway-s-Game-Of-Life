@@ -39,6 +39,7 @@
 
 import numpy # Will use to speed up looping through nested lists
 import pprint
+import time
 
 
 # Will be used for both a number of elements in nested list and the number of nested lists
@@ -60,8 +61,12 @@ left_right_border = '|'
 def main():
 	
 	creating_grid()
-	unpacking_lists()
-	input()
+	# unpacking_lists()
+	
+	while True:
+		time.sleep(2)
+		running_game()
+		unpacking_lists()
 
 
 
@@ -78,11 +83,17 @@ def creating_grid():
 			# Checking if to draw left or right border
 			elif j==0 or j== grid_size-1:
 				nested_list.append(left_right_border)
-			# Adding alive character to specific spot in grid  -------
-			elif i==int(grid_size/2)-2 and j==int(grid_size/2):#	 |__ Just a custom addition of elements to grid
-				nested_list.append(alive)					#		 |   Can be changed however you like
-			# Adding alive characters to specific spot in grid ------
-			elif i==int(grid_size/2)-1 and j>int(grid_size/2)-2 and j<int(grid_size/2)+2:
+			# Adding alive characters to specific spot in grid                         -------
+			elif i==int(grid_size/2)-4 and j>int(grid_size/2)-5 and j<int(grid_size/2)+5:
+				nested_list.append(alive)
+			# Adding alive characters to specific spot in grid                         -------
+			elif i==int(grid_size/2)-3 and j>int(grid_size/2)-5 and j<int(grid_size/2)+5:
+				nested_list.append(alive)
+			# Adding alive characters to specific spot in grid                         -------
+			elif i==int(grid_size/2)-2 and j>int(grid_size/2)-5 and j<int(grid_size/2)+5:#	 |__ Just a custom addition of elements to grid
+				nested_list.append(alive)					#		                         |   Can be changed however you like
+			# Adding alive characters to specific spot in grid                         ------
+			elif i==int(grid_size/2)-1 and j>int(grid_size/2)-5 and j<int(grid_size/2)+5:
 				nested_list.append(alive)
 			# Adds all the dead characters to the grid
 			else:
@@ -90,7 +101,53 @@ def creating_grid():
 
 		outer_list.append(nested_list)
 
-# Unpacking nested lists for nicer grid look
+
+def running_game():
+	for i in range(len(outer_list)):
+		for j in range(len(outer_list[i])):
+			log = 0
+			# Checks left of the element
+			if j != 0:
+				if outer_list[i][j-1] == alive:
+					log += 1
+			# Checks right of the element
+			if j != grid_size-1: 
+				if outer_list[i][j+1] == alive:
+					log += 1
+			# Checks above the element
+			if i != 0:
+				if outer_list[i-1][j] == alive:
+					log += 1
+			# Checks below the element
+			if i != grid_size-1:
+				if outer_list[i+1][j] == alive:
+					log += 1
+			# Checks top left
+			if i != 0 and j != 0:
+				if outer_list[i-1][j-1] == alive:
+					log += 1
+			# Checks top right
+			if i != 0 and j != grid_size-1:
+				if outer_list[i-1][j+1] == alive:
+					log += 1
+			# Checks bottom left
+			if i != grid_size-1 and j != 0:
+				if outer_list[i+1][j-1] == alive:
+					log += 1
+			# Checks bottom right
+			if i != grid_size-1 and j != grid_size-1:
+				if outer_list[i+1][j+1] == alive:
+					log += 1
+
+			# Checks if cell can be alive in current situation		
+			if log<2 or log>3:
+				outer_list[i][j] = dead
+			# Checks if cell is dead and if it has 3 alive neighbour cells
+			# then that dead cell will come alive
+			if outer_list[i][j] == dead and log == 3:
+				outer_list[i][j] = alive
+
+# Unpacking nested lists for nicer grid print look
 def unpacking_lists():
 	for row in outer_list:
 		print(*row)
