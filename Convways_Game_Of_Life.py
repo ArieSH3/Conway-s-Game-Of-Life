@@ -4,6 +4,10 @@
 
 	About : Creating a Conway's game of life to be run in terminal with ASCII characters
 
+	Resources: Drawing a grid in pygame
+			   ||||||||||||||||||||||||
+			   https://stackoverflow.com/questions/33963361/how-to-make-a-grid-in-pygame
+
 	Rules:
 		1. Any live cell with two or three live neighbours survives
 		2. Any dead cell with three live neighbours becomes a live cell
@@ -61,13 +65,12 @@ left_right_border = '|'
 def main():
 	
 	creating_grid()
-	# unpacking_lists()
-	
+	placing_initial_characters()
+	time.sleep(2)
 	while True:
-		time.sleep(2)
+		time.sleep(0.1)
 		running_game()
 		unpacking_lists()
-
 
 
 
@@ -77,31 +80,30 @@ def creating_grid():
 	for i in range(grid_size):
 		nested_list = []
 		for j in range(grid_size):
-			# Checking if to draw top or bottom border
-			if i==0 or i== grid_size-1:
-				nested_list.append(top_bottom_border)
-			# Checking if to draw left or right border
-			elif j==0 or j== grid_size-1:
-				nested_list.append(left_right_border)
-			# Adding alive characters to specific spot in grid                         -------
-			elif i==int(grid_size/2)-4 and j>int(grid_size/2)-5 and j<int(grid_size/2)+5:
-				nested_list.append(alive)
-			# Adding alive characters to specific spot in grid                         -------
-			elif i==int(grid_size/2)-3 and j>int(grid_size/2)-5 and j<int(grid_size/2)+5:
-				nested_list.append(alive)
-			# Adding alive characters to specific spot in grid                         -------
-			elif i==int(grid_size/2)-2 and j>int(grid_size/2)-5 and j<int(grid_size/2)+5:#	 |__ Just a custom addition of elements to grid
-				nested_list.append(alive)					#		                         |   Can be changed however you like
-			# Adding alive characters to specific spot in grid                         ------
-			elif i==int(grid_size/2)-1 and j>int(grid_size/2)-5 and j<int(grid_size/2)+5:
-				nested_list.append(alive)
-			# Adds all the dead characters to the grid
-			else:
 				nested_list.append(dead)
 
 		outer_list.append(nested_list)
 
 
+
+# Placing characters on the grid
+# Current setup creates vertical lines sepparated by one empty space
+def placing_initial_characters():
+	for i in range(0,len(outer_list),2): # Step is set to 2
+		for j in range(0,len(outer_list[i])):
+			# Adding alive characters to specific spot in grid                         ------
+			#if i==int(grid_size/2)-1 and j>int(grid_size/2)-5 and j<int(grid_size/2)+5:
+			#if i==int(grid_size/2)-1 or i==int(grid_size/2)-2 or i==int(grid_size/2)-3:
+			outer_list[i][j] = alive
+
+	for row in outer_list:
+		print(*row)
+
+
+
+
+# Runs the game and does checks for positions around current element and if its
+# alive or dead so it can apply the rules in the end
 def running_game():
 	for i in range(len(outer_list)):
 		for j in range(len(outer_list[i])):
@@ -139,6 +141,10 @@ def running_game():
 				if outer_list[i+1][j+1] == alive:
 					log += 1
 
+			
+
+			#          ** APPLYING RULES **
+
 			# Checks if cell can be alive in current situation		
 			if log<2 or log>3:
 				outer_list[i][j] = dead
@@ -146,6 +152,8 @@ def running_game():
 			# then that dead cell will come alive
 			if outer_list[i][j] == dead and log == 3:
 				outer_list[i][j] = alive
+
+
 
 # Unpacking nested lists for nicer grid print look
 def unpacking_lists():
