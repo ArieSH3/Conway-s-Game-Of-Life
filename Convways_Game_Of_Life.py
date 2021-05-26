@@ -42,26 +42,31 @@ import pprint
 
 
 # Will be used for both a number of elements in nested list and the number of nested lists
-grid_size = 20 
+grid_size = 21 
 
 outer_list = []
-no_element = ' '
+no_element = '_'
 element = '#'
 
 # Setting up pretty printer so nested lists are printed below eachother instead of next to eachother
 pp = pprint.PrettyPrinter(indent=1)
 
+# Creates a grid with 4 pixels(characters) in the middle in the shape of upside down T
 for i in range(grid_size):
 	nested_list = []
 	for j in range(grid_size):
-		if i==grid_size-1 and j>grid_size-2 and j<grid_size+2:
+		if i==int(grid_size/2)-2 and j==int(grid_size/2):
+			nested_list.append(element)
+		elif i==int(grid_size/2)-1 and j>int(grid_size/2)-2 and j<int(grid_size/2)+2:
 			nested_list.append(element)
 		else:
 			nested_list.append(no_element)
 
 	outer_list.append(nested_list)
 
-pp.pprint(outer_list)
+for row in outer_list:
+	print(*row)
+# pp.pprint(outer_list)
 input()
 # print(outer_list)
 
