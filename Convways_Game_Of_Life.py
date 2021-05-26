@@ -42,31 +42,63 @@ import pprint
 
 
 # Will be used for both a number of elements in nested list and the number of nested lists
-grid_size = 21 
+grid_size = 60
 
+# Outer boundary for all the nested lists
 outer_list = []
-no_element = '_'
-element = '#'
 
-# Setting up pretty printer so nested lists are printed below eachother instead of next to eachother
-pp = pprint.PrettyPrinter(indent=1)
+# Alive and dead pixels(characters) that will be displayed on grid
+dead = ' '
+alive = '#'
+
+# Elements for borders
+top_bottom_border = '_'
+left_right_border = '|'
+
+
+# 			---- MAIN PROGRAM FUNCTION ----
+def main():
+	
+	creating_grid()
+	unpacking_lists()
+	input()
+
+
+
+
 
 # Creates a grid with 4 pixels(characters) in the middle in the shape of upside down T
-for i in range(grid_size):
-	nested_list = []
-	for j in range(grid_size):
-		if i==int(grid_size/2)-2 and j==int(grid_size/2):
-			nested_list.append(element)
-		elif i==int(grid_size/2)-1 and j>int(grid_size/2)-2 and j<int(grid_size/2)+2:
-			nested_list.append(element)
-		else:
-			nested_list.append(no_element)
+def creating_grid():
+	for i in range(grid_size):
+		nested_list = []
+		for j in range(grid_size):
+			# Checking if to draw top or bottom border
+			if i==0 or i== grid_size-1:
+				nested_list.append(top_bottom_border)
+			# Checking if to draw left or right border
+			elif j==0 or j== grid_size-1:
+				nested_list.append(left_right_border)
+			# Adding alive character to specific spot in grid  -------
+			elif i==int(grid_size/2)-2 and j==int(grid_size/2):#	 |__ Just a custom addition of elements to grid
+				nested_list.append(alive)					#		 |   Can be changed however you like
+			# Adding alive characters to specific spot in grid ------
+			elif i==int(grid_size/2)-1 and j>int(grid_size/2)-2 and j<int(grid_size/2)+2:
+				nested_list.append(alive)
+			# Adds all the dead characters to the grid
+			else:
+				nested_list.append(dead)
 
-	outer_list.append(nested_list)
+		outer_list.append(nested_list)
 
-for row in outer_list:
-	print(*row)
-# pp.pprint(outer_list)
-input()
-# print(outer_list)
+# Unpacking nested lists for nicer grid look
+def unpacking_lists():
+	for row in outer_list:
+		print(*row)
 
+
+
+
+
+
+
+main()
