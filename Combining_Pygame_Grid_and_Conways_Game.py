@@ -41,8 +41,7 @@
 								  either lives or dies.
 '''
 
-import numpy # Will use to speed up looping through nested lists
-import pprint
+import pygame
 import time
 
 
