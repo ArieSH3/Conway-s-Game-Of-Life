@@ -7,6 +7,7 @@ import pygame
 
 WHITE  = (255,255,255)
 BLACK  = (0  ,0  ,0)
+GREEN  = (50, 200, 50)
 WINDOW_WIDTH  = 1030
 WINDOW_HEIGHT = 1030
 
@@ -28,7 +29,7 @@ def main():
 
 
 def drawGrid():
-	block_size = 5 # Set the size of the grid block
+	block_size = 20 # Set the size of the grid block
 	for x in range(0, WINDOW_WIDTH, block_size):
 	 	for y in range(0, WINDOW_HEIGHT, block_size):
 	 		rect = pygame.Rect(x, y, block_size, block_size)
