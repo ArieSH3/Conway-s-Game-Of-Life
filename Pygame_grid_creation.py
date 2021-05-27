@@ -3,18 +3,19 @@
 '''
 
 import pygame
+# from pygame.locals import *
 
 WHITE  = (255,255,255)
 BLACK  = (0  ,0  ,0)
-WINDOW_WIDTH  = 400
-WINDOW_HEIGHT = 400
+WINDOW_WIDTH  = 1030
+WINDOW_HEIGHT = 1030
 
 def main():
 	global SCREEN, CLOCK
 	pygame.init()
 	SCREEN = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
-	CLOCK = pygame.time.Cock()
-	SCREEN.fill(BLACK)
+	CLOCK = pygame.time.Clock()
+	SCREEN.fill(WHITE)
 
 	while True:
 		drawGrid()
@@ -27,8 +28,12 @@ def main():
 
 
 def drawGrid():
-	block_size = 20 # Set the size of the grid block
+	block_size = 5 # Set the size of the grid block
 	for x in range(0, WINDOW_WIDTH, block_size):
 	 	for y in range(0, WINDOW_HEIGHT, block_size):
 	 		rect = pygame.Rect(x, y, block_size, block_size)
-	 		pygame.draw.rect(SCREEN, WHITE, rect, 1)
+	 		pygame.draw.rect(SCREEN, BLACK, rect, 1)
+
+
+
+main()
