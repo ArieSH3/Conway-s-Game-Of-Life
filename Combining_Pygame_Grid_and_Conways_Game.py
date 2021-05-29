@@ -7,6 +7,7 @@
 	Resources: Drawing a grid in pygame
 			   ||||||||||||||||||||||||
 			   https://stackoverflow.com/questions/33963361/how-to-make-a-grid-in-pygame
+			   http://programarcadegames.com/index.php?lang=en&chapter=array_backed_grids
 
 	Rules:
 		1. Any live cell with two or three live neighbours survives
@@ -46,26 +47,97 @@ import time
 
 
 # Will be used for both a number of elements in nested list and the number of nested lists
-GRID_SIZE = 60
+GRID_SIZE = 60*5 # 60
+
+fps = 0.01
+
+WHITE  = (255,255,255)
+BLACK  = (0  ,0  ,0)
+GREEN  = (100,200,100)
+BLUE   = (100,100,250)
+
+WINDOW_WIDTH  = 1000
+WINDOW_HEIGHT = 1000
+
+block_width  = 4 # 20
+block_height = 4 # 20
 
 # Outer boundary for all the nested lists
 outer_list = []
 
 # ALIVE and DEAD pixels(characters) that will be displayed on grid
-DEAD = ' '
-ALIVE = '#'
+DEAD = '0'
+ALIVE = '1'
 
 # 			---- MAIN PROGRAM FUNCTION ----
 def main():
-	
+	global screen, clock
+	pygame.init()
 	creating_grid()
-	placing_initial_characters()
-	time.sleep(2)
-	while True:
-		time.sleep(0.5)
-		running_game()
-		unpacking_lists()
+	# Setting the starting position of alive cells
+	# outer_list[GRID_SIZE//2][GRID_SIZE//2] = ALIVE
+	# outer_list[GRID_SIZE//2+1][GRID_SIZE//2] = ALIVE
+	# outer_list[GRID_SIZE//2+2][GRID_SIZE//2] = ALIVE
+	# outer_list[GRID_SIZE//2+2][GRID_SIZE//2+1] = ALIVE
+	# outer_list[GRID_SIZE//2+1][GRID_SIZE//2+2] = ALIVE
 
+	for x in range(0,GRID_SIZE,2):
+		for y in range(GRID_SIZE):
+			outer_list[x][y] = ALIVE
+
+	screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
+	pygame.display.set_caption('Game of Life')
+
+	clock = pygame.time.Clock()
+	screen.fill(BLACK)
+
+	#unpacking_lists()
+
+	while True:
+		time.sleep(fps)
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT:
+				pygame.quit()
+				sys.exit()
+
+		step_by_step_grid_draw()
+		running_game()
+
+	
+	# global SCREEN, CLOCK
+	# pygame.init()
+	# SCREEN = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
+	# CLOCK = pygame.time.Clock()
+	# SCREEN.fill(BLACK)
+
+	# creating_grid()
+	# placing_initial_characters()
+	# time.sleep(2)
+	# while True:
+	# 	time.sleep(0.5)
+	# 	#running_game()
+	# 	draw_grid()
+	# 	for event in pygame.event.get():
+	# 		if event.type == pygame.QUIT:
+	# 			pygame.quit()
+	# 			sys.exit()
+
+	# 	pygame.display.update()
+
+
+
+def step_by_step_grid_draw():
+	tracker = 0
+	for row in range(0, GRID_SIZE):
+		for column in range(0, GRID_SIZE):
+			colour = BLACK
+			if outer_list[row][column] == ALIVE:
+				colour = WHITE
+			else:
+				colour = BLACK
+			rect = pygame.Rect(row*block_width, column*block_height, block_width, block_height)
+			pygame.draw.rect(screen, colour, rect)
+	pygame.display.update()
 
 
 
@@ -82,22 +154,24 @@ def creating_grid():
 
 # Placing characters on the grid
 # Current setup creates vertical lines sepparated by one empty space
-def placing_initial_characters():
-	for i in range(0,len(outer_list),2): # Step is set to 2
-		for j in range(0,len(outer_list[i])):
-			# Adding ALIVE characters to specific spot in grid                         ------
-			#if i==int(GRID_SIZE/2)-1 and j>int(GRID_SIZE/2)-5 and j<int(GRID_SIZE/2)+5:
-			#if i==int(GRID_SIZE/2)-1 or i==int(GRID_SIZE/2)-2 or i==int(GRID_SIZE/2)-3:
-			outer_list[i][j] = ALIVE
 
-	for row in outer_list:
-		print(*row)
+# def placing_initial_characters():
+# 	for i in range(0,len(outer_list),2): # Step is set to 2
+# 		for j in range(0,len(outer_list[i])):
+# 			# Adding ALIVE characters to specific spot in grid                         ------
+# 			#if i==int(GRID_SIZE/2)-1 and j>int(GRID_SIZE/2)-5 and j<int(GRID_SIZE/2)+5:
+# 			#if i==int(GRID_SIZE/2)-1 or i==int(GRID_SIZE/2)-2 or i==int(GRID_SIZE/2)-3:
+# 			outer_list[i][j] = ALIVE
 
+# 	for row in outer_list:
+# 		# print(*row)
+# 		pass
 
 
 
 # Runs the game and does checks for positions around current element and if its
 # ALIVE or DEAD so it can apply the rules in the end
+
 def running_game():
 	for i in range(len(outer_list)):
 		for j in range(len(outer_list[i])):
@@ -150,10 +224,23 @@ def running_game():
 
 
 # Unpacking nested lists for nicer grid print look
+
 def unpacking_lists():
 	for row in outer_list:
 		print(*row)
 
+
+# def draw_grid():
+# 	size = GRID_SIZE * GRID_SIZE
+# 	block_size = 5 # Set the size of the grid block
+# 	for x in range(0, WINDOW_WIDTH, block_size):
+# 		for y in range(0, WINDOW_HEIGHT, block_size):
+# 	 		rect = pygame.Rect(x, y, block_size, block_size)
+#  			pygame.draw.rect(SCREEN, WHITE, rect, 1)
+ 		
+
+	 		
+		
 
 
 
