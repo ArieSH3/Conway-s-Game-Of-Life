@@ -8,6 +8,7 @@ import pygame
 WHITE  = (255,255,255)
 BLACK  = (0  ,0  ,0)
 GREEN  = (50, 200, 50)
+
 WINDOW_WIDTH  = 1030
 WINDOW_HEIGHT = 1030
 
