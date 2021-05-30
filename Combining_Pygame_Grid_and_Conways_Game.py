@@ -47,9 +47,9 @@ import time
 
 
 # Will be used for both a number of elements in nested list and the number of nested lists
-GRID_SIZE = 60*5 # 60
+GRID_SIZE = 150 # 60*5 # 60
 
-fps = 0.01
+fps = 0.1 #0.01
 
 WHITE  = (255,255,255)
 BLACK  = (0  ,0  ,0)
@@ -59,8 +59,8 @@ BLUE   = (100,100,250)
 WINDOW_WIDTH  = 1000
 WINDOW_HEIGHT = 1000
 
-block_width  = 4 # 20
-block_height = 4 # 20
+block_width  = WINDOW_WIDTH//GRID_SIZE # 4 # 20
+block_height = WINDOW_HEIGHT//GRID_SIZE # 4 # 20
 
 # Outer boundary for all the nested lists
 outer_list = []
