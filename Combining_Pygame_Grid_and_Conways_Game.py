@@ -80,7 +80,6 @@ def main():
 	# outer_list[GRID_SIZE//2+2][GRID_SIZE//2] = ALIVE
 	# outer_list[GRID_SIZE//2+2][GRID_SIZE//2+1] = ALIVE
 	# outer_list[GRID_SIZE//2+1][GRID_SIZE//2+2] = ALIVE
-
 	for x in range(0,GRID_SIZE,2):
 		for y in range(GRID_SIZE):
 			outer_list[x][y] = ALIVE
@@ -103,29 +102,8 @@ def main():
 		step_by_step_grid_draw()
 		running_game()
 
-	
-	# global SCREEN, CLOCK
-	# pygame.init()
-	# SCREEN = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
-	# CLOCK = pygame.time.Clock()
-	# SCREEN.fill(BLACK)
 
-	# creating_grid()
-	# placing_initial_characters()
-	# time.sleep(2)
-	# while True:
-	# 	time.sleep(0.5)
-	# 	#running_game()
-	# 	draw_grid()
-	# 	for event in pygame.event.get():
-	# 		if event.type == pygame.QUIT:
-	# 			pygame.quit()
-	# 			sys.exit()
-
-	# 	pygame.display.update()
-
-
-
+# Draws a grid in pygame
 def step_by_step_grid_draw():
 	tracker = 0
 	for row in range(0, GRID_SIZE):
@@ -151,27 +129,8 @@ def creating_grid():
 		outer_list.append(nested_list)
 
 
-
-# Placing characters on the grid
-# Current setup creates vertical lines sepparated by one empty space
-
-# def placing_initial_characters():
-# 	for i in range(0,len(outer_list),2): # Step is set to 2
-# 		for j in range(0,len(outer_list[i])):
-# 			# Adding ALIVE characters to specific spot in grid                         ------
-# 			#if i==int(GRID_SIZE/2)-1 and j>int(GRID_SIZE/2)-5 and j<int(GRID_SIZE/2)+5:
-# 			#if i==int(GRID_SIZE/2)-1 or i==int(GRID_SIZE/2)-2 or i==int(GRID_SIZE/2)-3:
-# 			outer_list[i][j] = ALIVE
-
-# 	for row in outer_list:
-# 		# print(*row)
-# 		pass
-
-
-
 # Runs the game and does checks for positions around current element and if its
 # ALIVE or DEAD so it can apply the rules in the end
-
 def running_game():
 	for i in range(len(outer_list)):
 		for j in range(len(outer_list[i])):
@@ -224,24 +183,9 @@ def running_game():
 
 
 # Unpacking nested lists for nicer grid print look
-
 def unpacking_lists():
 	for row in outer_list:
 		print(*row)
-
-
-# def draw_grid():
-# 	size = GRID_SIZE * GRID_SIZE
-# 	block_size = 5 # Set the size of the grid block
-# 	for x in range(0, WINDOW_WIDTH, block_size):
-# 		for y in range(0, WINDOW_HEIGHT, block_size):
-# 	 		rect = pygame.Rect(x, y, block_size, block_size)
-#  			pygame.draw.rect(SCREEN, WHITE, rect, 1)
- 		
-
-	 		
-		
-
 
 
 
