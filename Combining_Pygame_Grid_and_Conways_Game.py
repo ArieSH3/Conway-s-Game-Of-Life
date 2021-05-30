@@ -99,12 +99,12 @@ def main():
 				pygame.quit()
 				sys.exit()
 
-		step_by_step_grid_draw()
+		grid_draw()
 		running_game()
 
 
 # Draws a grid in pygame
-def step_by_step_grid_draw():
+def grid_draw():
 	tracker = 0
 	for row in range(0, GRID_SIZE):
 		for column in range(0, GRID_SIZE):
