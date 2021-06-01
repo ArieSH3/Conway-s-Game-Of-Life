@@ -47,9 +47,9 @@ import time
 
 
 # Will be used for both a number of elements in nested list and the number of nested lists
-GRID_SIZE = 150 # 60*5 # 60
+GRID_SIZE = 40 # , 50 and 100 look nice
 
-fps = 0.1 #0.01
+FPS = 4 
 
 WHITE  = (255,255,255)
 BLACK  = (0  ,0  ,0)
@@ -69,17 +69,16 @@ outer_list = []
 DEAD = '0'
 ALIVE = '1'
 
+global mouse_pos
+
 # 			---- MAIN PROGRAM FUNCTION ----
 def main():
 	global screen, clock
 	pygame.init()
+	
 	creating_grid()
+
 	# Setting the starting position of alive cells
-	# outer_list[GRID_SIZE//2][GRID_SIZE//2] = ALIVE
-	# outer_list[GRID_SIZE//2+1][GRID_SIZE//2] = ALIVE
-	# outer_list[GRID_SIZE//2+2][GRID_SIZE//2] = ALIVE
-	# outer_list[GRID_SIZE//2+2][GRID_SIZE//2+1] = ALIVE
-	# outer_list[GRID_SIZE//2+1][GRID_SIZE//2+2] = ALIVE
 	for x in range(0,GRID_SIZE,2):
 		for y in range(GRID_SIZE):
 			outer_list[x][y] = ALIVE
@@ -93,28 +92,40 @@ def main():
 	#unpacking_lists()
 
 	while True:
-		time.sleep(fps)
+		# time.sleep(FPS)
+		mouse_pos = None
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
 				pygame.quit()
 				sys.exit()
+			if event.type == pygame.MOUSEBUTTONDOWN:
+				mouse_pos = pygame.mouse.get_pos()
 
 		grid_draw()
-		running_game()
+		running_game(mouse_pos)
+
+		clock.tick(FPS)
 
 
 # Draws a grid in pygame
 def grid_draw():
 	tracker = 0
 	for row in range(0, GRID_SIZE):
+		
 		for column in range(0, GRID_SIZE):
 			colour = BLACK
 			if outer_list[row][column] == ALIVE:
 				colour = WHITE
 			else:
 				colour = BLACK
+			# if pos:
+			# 	if pos[0]//block_width == row and pos[1]//block_height == column:
+			# 		colour = WHITE
 			rect = pygame.Rect(row*block_width, column*block_height, block_width, block_height)
 			pygame.draw.rect(screen, colour, rect)
+
+			mouse_pos = None
+
 	pygame.display.update()
 
 
@@ -124,16 +135,16 @@ def creating_grid():
 	for i in range(GRID_SIZE):
 		nested_list = []
 		for j in range(GRID_SIZE):
-				nested_list.append(DEAD)
+			nested_list.append(DEAD)
 
 		outer_list.append(nested_list)
 
 
 # Runs the game and does checks for positions around current element and if its
 # ALIVE or DEAD so it can apply the rules in the end
-def running_game():
-	for i in range(len(outer_list)):
-		for j in range(len(outer_list[i])):
+def running_game(pos):
+	for i in range(GRID_SIZE):
+		for j in range(GRID_SIZE):
 			log = 0
 			# Checks left of the element
 			if j != 0:
@@ -179,6 +190,11 @@ def running_game():
 			# then that DEAD cell will come ALIVE
 			if outer_list[i][j] == DEAD and log == 3:
 				outer_list[i][j] = ALIVE
+
+			# 'Enabling' of drawing individual elements on the grid
+			if pos:
+				if pos[0]//block_width == i and pos[1]//block_height == j:
+					outer_list[i][j] = ALIVE
 
 
 
