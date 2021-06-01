@@ -79,17 +79,11 @@ def main():
 	creating_grid()
 
 	# Setting the starting position of alive cells
+	
 	# for x in range(0,GRID_SIZE,2):
 	# 	for y in range(GRID_SIZE):
 	# 		outer_list[x][y] = ALIVE
-	outer_list[GRID_SIZE//2][GRID_SIZE//2] = ALIVE
-	outer_list[GRID_SIZE//2][GRID_SIZE//2+1] = ALIVE
-	outer_list[GRID_SIZE//2][GRID_SIZE//2+2] = ALIVE
-	outer_list[GRID_SIZE//2+1][GRID_SIZE//2+2] = ALIVE
-	outer_list[GRID_SIZE//2+2][GRID_SIZE//2+1] = ALIVE
-
-
-
+	
 	screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 	pygame.display.set_caption('Game of Life')
 
